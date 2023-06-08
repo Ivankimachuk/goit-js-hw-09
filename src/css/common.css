@@ -16,3 +16,10 @@ img {
   display: block;
   max-width: 100%;
 }
+
+.btn-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
