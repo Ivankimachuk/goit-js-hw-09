@@ -32,14 +32,16 @@ flatpickr(datetimePicker, {
     },
   });
 
-  startBtn.addEventListener('click', ()=> {
+  startBtn.addEventListener('click', startButton)
+
+  function startButton () {
     const currentDateTime = new Date();
     const readout = selectedDateTime.getTime() - currentDateTime.getTime();
 
     if(readout > 0) {
         startReadout(readout);
     }
-  });
+  }
 
   function startReadout(readout) {
     clearInterval(countInterval);
