@@ -9,7 +9,9 @@ const dataHours = document.querySelector('[data-hours]');
 const dataMinutes = document.querySelector('[data-minutes]');
 const dataSeconds = document.querySelector('[data-seconds]');
 
+startBtn.disabled = true;
 let countInterval;
+let selectedDateTime;
 
 flatpickr(datetimePicker, {
     enableTime: true,
@@ -19,20 +21,20 @@ flatpickr(datetimePicker, {
     onClose(selectedDates) {
       const selectedDate = selectedDates[0];
       const currentDate = new Date();
-  
+      
       if (selectedDate <= currentDate) {
         window.alert("Please choose a date in the future");
         startBtn.disabled = true;
       } else {
         startBtn.disabled = false;
+        selectedDateTime = selectedDate;
       }
     },
   });
 
   startBtn.addEventListener('click', ()=> {
-    const selectedDate = flatpickr.parseDate(datetimePicker.value);
-    const currentDate = new Date();
-    const readout = selectedDate.getTime() - currentDate.getTime();
+    const currentDateTime = new Date();
+    const readout = selectedDateTime.getTime() - currentDateTime.getTime();
 
     if(readout > 0) {
         startReadout(readout);
@@ -45,15 +47,22 @@ flatpickr(datetimePicker, {
     countInterval= setInterval(() => {
         if(readout <= 0) {
             clearInterval(countInterval);
+            dataDays.textContent = '00';
+            dataHours.textContent = '00';
+            dataMinutes.textContent = '00';
+            dataSeconds.textContent = '00';
             return;
         }
 
-        const { days, hours, minutes, seconds } = convertMs(readout);
+        const currentDateTime = new Date();
+        const remainingTime = selectedDateTime.getTime() - currentDateTime.getTime();
+        const { days, hours, minutes, seconds } = convertMs(remainingTime);
 
         dataDays.textContent = addLeadingZero(days);
         dataHours.textContent = addLeadingZero(hours);
         dataMinutes.textContent = addLeadingZero(minutes);
         dataSeconds.textContent = addLeadingZero(seconds);
+       
 
         readout -= 1000;
     }, 1000);
@@ -79,5 +88,4 @@ flatpickr(datetimePicker, {
     return value.toString().padStart(2, '0');
   }
     
-    
-    
+
