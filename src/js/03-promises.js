@@ -15,8 +15,8 @@ function createPromise(position, delay) {
 
   formEl.addEventListener('submit', btnSubmit)
 
-function btnSubmit (event) {
-  event.preventDefault();
+function btnSubmit (e) {
+  e.preventDefault();
   const delayInput = formEl.elements.delay;
   const stepInput = formEl.elements.step;
   const amountInput = formEl.elements.amount;
