@@ -9,7 +9,7 @@ const dataHours = document.querySelector('[data-hours]');
 const dataMinutes = document.querySelector('[data-minutes]');
 const dataSeconds = document.querySelector('[data-seconds]');
 
-startBtn.disabled = true;
+
 let countInterval;
 let selectedDateTime;
 
@@ -25,8 +25,10 @@ flatpickr(datetimePicker, {
       if (selectedDate <= currentDate) {
         window.alert("Please choose a date in the future");
         startBtn.disabled = true;
+        datetimePicker.disabled = true;
       } else {
         startBtn.disabled = false;
+        datetimePicker.disabled = false;
         selectedDateTime = selectedDate;
       }
     },
@@ -48,11 +50,8 @@ flatpickr(datetimePicker, {
 
     countInterval= setInterval(() => {
         if(readout <= 0) {
-            clearInterval(countInterval);
-            dataDays.textContent = '00';
-            dataHours.textContent = '00';
-            dataMinutes.textContent = '00';
-            dataSeconds.textContent = '00';
+          clearInterval(countInterval);
+          resetTimer();
             return;
         }
 
@@ -68,6 +67,19 @@ flatpickr(datetimePicker, {
 
         readout -= 1000;
     }, 1000);
+        startBtn.disabled = true;
+        datetimePicker.disabled = true;
+  }
+
+  function resetTimer () {
+
+    dataDays.textContent = '00';
+    dataHours.textContent = '00';
+    dataMinutes.textContent = '00';
+    dataSeconds.textContent = '00';
+
+    startBtn.disabled = false;
+    datetimePicker.disabled = false;
   }
 
 
